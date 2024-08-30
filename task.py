@@ -1,45 +1,58 @@
 import random
-from typing import List, Any
 
-letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
-numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
-symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
+from hangman_words import word_list
+from hangman_art import stages, logo
 
-print("Welcome to the PyPassword Generator!")
-nr_letters = int(input("How many letters would you like in your password?\n"))
-nr_symbols = int(input(f"How many symbols would you like?\n"))
-nr_numbers = int(input(f"How many numbers would you like?\n"))
+lives = 6
 
-# easy level
-"""password=""
-range(1,101)
-for letter in range(0,nr_letters): #+1 tif user enter 4 then range will be 1to 5 and work till 4
-    password+=random.choice(letters)
-for symbol in range(1, nr_symbols + 1):
-    password+=random.choice(symbols)
-for number in range(1, nr_numbers + 1):
-    password+=random.choice(numbers)
+print(logo)
 
+chosen_word = random.choice(word_list)
+print(chosen_word)
 
-print(password)"""
+placeholder = ""
+word_length = len(chosen_word)
+for position in range(word_length):
+    placeholder += "_"
+print("Word to guess: " + placeholder)
 
-# hard level
-password_list=[]
-for letter in range(0,nr_letters): #+1 tif user enter 4 then range will be 1to 5 and work till 4
-    password_list.append(random.choice(letters))
-for symbol in range(1, nr_symbols + 1):
-    password_list.append(random.choice(symbols))
+game_over = False
+correct_letters = []
 
-for number in range(1, nr_numbers + 1):
-    password_list.append(random.choice(numbers))
-print(password_list)
-random.shuffle(password_list)
-print(password_list)
+while not game_over:
 
-password=""
+    print(f"****************************{lives}/6 LIVES LEFT****************************")
+    guess = input("Guess a letter: ").lower()
 
-for char in password_list:
-    password+=char
+    if guess in correct_letters:
+        print(f"You've already guessed {guess}")
 
-print(f"your password is {password}")
+    display = ""
+
+    for letter in chosen_word:
+        if letter == guess:
+            display += letter
+            correct_letters.append(guess)
+        elif letter in correct_letters:
+            display += letter
+        else:
+            display += "_"
+
+    print("Word to guess: " + display)
+
+    if guess not in chosen_word:
+        lives -= 1
+        print(f"You guessed {guess}, that's not in the word. You lose a life.")
+
+        if lives == 0:
+            game_over = True
+
+            print(f"***********************IT WAS {chosen_word}! YOU LOSE**********************")
+
+    if "_" not in display:
+        game_over = True
+        print("****************************YOU WIN****************************")
+
+    print(stages[lives])
+
 
