@@ -1,45 +1,45 @@
 import random
-rock = '''
-    _______
----'   ____)
-      (_____)
-      (_____)
-      (____)
----.__(___)
-'''
+from typing import List, Any
 
-paper = '''
-    _______
----'   ____)____
-          ______)
-          _______)
-         _______)
----.__________)
-'''
+letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
 
-scissors = '''
-    _______
----'   ____)____
-          ______)
-       __________)
-      (____)
----.__(___)'
-'''
-image=[rock,paper,scissors]
-choice=int(input("what do you choose? type 0 for rock, 1 for paper,2 for scissors\n"))
-print(image[choice])
-ch=random.randint(0,2)
-print("computer choose ")
-print(image[ch])
-if choice>=3 and choice<0:
-    print("you typed invalid number so you lose :(")
-elif choice==0 and ch==2: # rock and scissors
-    print("you win !")
-elif ch==0 and choice==2:
-    print("you lose")
-elif choice>ch: 
-    print("you win!")
-elif ch>choice: 
-    print("you lose")
-elif ch==choice: #if both same
-    print("it is draw")
+print("Welcome to the PyPassword Generator!")
+nr_letters = int(input("How many letters would you like in your password?\n"))
+nr_symbols = int(input(f"How many symbols would you like?\n"))
+nr_numbers = int(input(f"How many numbers would you like?\n"))
+
+# easy level
+"""password=""
+range(1,101)
+for letter in range(0,nr_letters): #+1 tif user enter 4 then range will be 1to 5 and work till 4
+    password+=random.choice(letters)
+for symbol in range(1, nr_symbols + 1):
+    password+=random.choice(symbols)
+for number in range(1, nr_numbers + 1):
+    password+=random.choice(numbers)
+
+
+print(password)"""
+
+# hard level
+password_list=[]
+for letter in range(0,nr_letters): #+1 tif user enter 4 then range will be 1to 5 and work till 4
+    password_list.append(random.choice(letters))
+for symbol in range(1, nr_symbols + 1):
+    password_list.append(random.choice(symbols))
+
+for number in range(1, nr_numbers + 1):
+    password_list.append(random.choice(numbers))
+print(password_list)
+random.shuffle(password_list)
+print(password_list)
+
+password=""
+
+for char in password_list:
+    password+=char
+
+print(f"your password is {password}")
+
